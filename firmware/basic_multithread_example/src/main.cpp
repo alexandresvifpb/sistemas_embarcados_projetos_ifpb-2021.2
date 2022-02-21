@@ -3,6 +3,9 @@
 #include <freertos/task.h>
 #include <esp_task_wdt.h>
 
+// adicionando as bibliotecas 
+#include <My_library.h>
+
 // referencia da tarefa
 TaskHandle_t TaskIDTarefa1;
 TaskHandle_t TaskIDTarefa2;
