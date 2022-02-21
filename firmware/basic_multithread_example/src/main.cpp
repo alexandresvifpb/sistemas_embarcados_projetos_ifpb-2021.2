@@ -18,13 +18,18 @@ void TaskTarefa3 (void * pvParameters);
 
 void setup() {
 
+  // Inicializando a porta serial e enviando uma mensagem
+  Serial.begin(115200);
+  Serial.println("");
+  Serial.println("Basic multithread example");
+
   // cria a tarefa (task) 1 com uma pilha 2048 palavras, prioridade 0 no nucleo 0
   xTaskCreatePinnedToCore(
     TaskTarefa1,            // funcao que implementa a tarefa
     "TaskTarefa1",          // nome da tarefa
     1024,                   // tamanho (em palavras) da pilha alocada para a tarefa
     NULL,                   // paramentros de entrada para a funcao que implementa a tarefa
-    0,                      // prioridade da tarefa (quanto menor maior a prioridade)
+    1,                      // prioridade da tarefa (quanto menor maior a prioridade)
     &TaskIDTarefa1,         // referencia da tarefa (para acompanhamento)
     PRO_CPU_NUM             // defini o nucleo (core) que ira executar a tarefa (PRO_CPU_NUM = 0)
   );
@@ -68,12 +73,17 @@ void loop() {
 // implementacao da tarefa 1
 void TaskTarefa1 (void * pvParameters)
 {
+  esp_task_wdt_add(NULL);     // adiciona a thread no watchdog
+
   // configurcao dos recursos que a tarefa ira utilizar
 
   // loop infinito que implementa a tarefa
   for ( ;; )
   {
     /* code */
+
+    esp_task_wdt_reset();               // Reset watchdog counter
+    vTaskDelay(pdMS_TO_TICKS(1000));    // Pausa a Task durante X ms e libera o nucleo
   }
   
 }
@@ -81,12 +91,17 @@ void TaskTarefa1 (void * pvParameters)
 // implementacao da tarefa 2
 void TaskTarefa2 (void * pvParameters)
 {
+  esp_task_wdt_add(NULL);     // adiciona a thread no watchdog
+
   // configurcao dos recursos que a tarefa ira utilizar
 
   // loop infinito que implementa a tarefa
   for ( ;; )
   {
     /* code */
+
+    esp_task_wdt_reset();               // Reset watchdog counter
+    vTaskDelay(pdMS_TO_TICKS(1000));    // Pausa a Task durante X ms e libera o nucleo
   }
   
 }
@@ -94,12 +109,17 @@ void TaskTarefa2 (void * pvParameters)
 // implementacao da tarefa 3
 void TaskTarefa3 (void * pvParameters)
 {
+  esp_task_wdt_add(NULL);     // adiciona a thread no watchdog
+
   // configurcao dos recursos que a tarefa ira utilizar
 
   // loop infinito que implementa a tarefa
   for ( ;; )
   {
     /* code */
-  }
+ 
+    esp_task_wdt_reset();               // Reset watchdog counter
+    vTaskDelay(pdMS_TO_TICKS(1000));    // Pausa a Task durante X ms e libera o nucleo
+ }
   
 }
